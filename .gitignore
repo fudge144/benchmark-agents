@@ -1,0 +1,16 @@
+# Benchmark results — auto-committed by GitHub Actions
+benchmark_results.json
+
+# Python venv
+agents-venv/
+__pycache__/
+*.pyc
+
+# IDE
+.vscode/
+.idea/
+
+# API keys — NEVER commit
+.openrouter_key
+.upstage_key
+.gemini_key

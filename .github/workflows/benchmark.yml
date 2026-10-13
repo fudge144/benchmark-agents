@@ -1,0 +1,67 @@
+name: Benchmark Agents
+
+on:
+  schedule:
+    # Run daily at 03:00 UTC
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+    # Manual trigger from GitHub UI
+    inputs:
+      models:
+        description: "Models to benchmark (comma-separated)"
+        required: false
+        default: "solar-pro4,llama-3b,deepseek"
+      tasks:
+        description: "Tasks to run (comma-separated)"
+        required: false
+        default: "mmlu,coding,reasoning,logic,math"
+      api:
+        description: "API backend: openrouter, upstage, or gemini"
+        required: false
+        default: "openrouter"
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install aiohttp
+
+      - name: Run benchmarks
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          BENCHMARK_API: ${{ github.event.inputs.api || 'openrouter' }}
+        run: |
+          python benchmark_runner.py \
+            --api "${{ github.event.inputs.api || 'openrouter' }}" \
+            --models "${{ github.event.inputs.models || 'solar-pro4,llama-3b,deepseek' }}" \
+            --tasks "${{ github.event.inputs.tasks || 'mmlu,coding,reasoning,logic,math' }}"
+
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add benchmark_results.json || true
+          git diff --staged --quiet || git commit -m "Benchmark results ($(date -u +%Y-%m-%d))"
+          git push
+
+      - name: Upload results artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results
+          path: benchmark_results.json
+          retention-days: 30
