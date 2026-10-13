@@ -32,7 +32,10 @@ import aiohttp
 # ---------------------------------------------------------------------------
 # Paths
 # ---------------------------------------------------------------------------
-RESULTS_FILE = Path("/opt/data/agents/benchmarks/lm_eval_results.json")
+# Save to a relative path by default (works in GitHub Actions and locally).
+# Override with BENCHMARK_RESULTS_FILE env var.
+_RESULTS_FILE = Path(os.environ.get("BENCHMARK_RESULTS_FILE", "lm_eval_results.json"))
+RESULTS_FILE = _RESULTS_FILE.resolve() if _RESULTS_FILE.is_absolute() else Path.cwd() / _RESULTS_FILE
 
 # ---------------------------------------------------------------------------
 # Model registry

@@ -15,8 +15,9 @@ from pathlib import Path
 
 import streamlit as st
 
-RESULTS_FILE = Path("/opt/data/agents/benchmarks/lm_eval_results.json")
-legacy_results_file = Path("/opt/data/agents/benchmarks/results.json")
+RESULTS_FILE = Path(os.environ.get("BENCHMARK_RESULTS_FILE", "lm_eval_results.json"))
+RESULTS_FILE = RESULTS_FILE.resolve() if RESULTS_FILE.is_absolute() else Path.cwd() / RESULTS_FILE
+legacy_results_file = Path(os.environ.get("BENCHMARK_LEGACY_FILE", "/opt/data/agents/benchmarks/results.json"))
 
 
 def load_results() -> list:

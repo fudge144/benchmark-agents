@@ -37,7 +37,8 @@ import uvicorn
 # ---------------------------------------------------------------------------
 # Paths
 # ---------------------------------------------------------------------------
-RESULTS_FILE = Path("/opt/data/agents/benchmarks/lm_eval_results.json")
+RESULTS_FILE = Path(os.environ.get("BENCHMARK_RESULTS_FILE", "lm_eval_results.json"))
+RESULTS_FILE = RESULTS_FILE.resolve() if RESULTS_FILE.is_absolute() else Path.cwd() / RESULTS_FILE
 RUNNER_SCRIPT = "/opt/data/agents/benchmark_runner.py"
 VENV_PYTHON = "/opt/data/agents-venv/bin/python3"
 
