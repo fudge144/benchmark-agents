@@ -14,5 +14,21 @@
     "error": "HTTP 401: Missing Authentication header",
     "response_preview": "",
     "timestamp": "2026-10-13T18:23:52.733443+00:00"
+  },
+  {
+    "model": "solar-pro4,llama-3b,deepseek",
+    "model_id": "solar-pro4,llama-3b,deepseek",
+    "task": "mmlu,coding,reasoning,logic,math",
+    "api": "openrouter",
+    "prompt_description": "",
+    "latency_ms": 60.9,
+    "tokens_per_second": 0,
+    "output_tokens": 0,
+    "input_tokens": 0,
+    "cost_usd": 0,
+    "quality_score": 0,
+    "error": "HTTP 401: Missing Authentication header",
+    "response_preview": "",
+    "timestamp": "2026-10-14T08:05:20.495626+00:00"
   }
 ]
