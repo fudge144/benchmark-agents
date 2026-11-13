@@ -478,5 +478,21 @@
     "error": "HTTP 401: No API key in the Authorization header: expected \"Bearer sk-or-...\". Check that your OpenRouter API key environment variable is set",
     "response_preview": "",
     "timestamp": "2026-11-12T10:25:06.667224+00:00"
+  },
+  {
+    "model": "solar-pro4,llama-3b,deepseek",
+    "model_id": "solar-pro4,llama-3b,deepseek",
+    "task": "mmlu,coding,reasoning,logic,math",
+    "api": "openrouter",
+    "prompt_description": "",
+    "latency_ms": 62.0,
+    "tokens_per_second": 0,
+    "output_tokens": 0,
+    "input_tokens": 0,
+    "cost_usd": 0,
+    "quality_score": 0,
+    "error": "HTTP 401: No API key in the Authorization header: expected \"Bearer sk-or-...\". Check that your OpenRouter API key environment variable is set",
+    "response_preview": "",
+    "timestamp": "2026-11-13T10:12:12.119971+00:00"
   }
 ]
